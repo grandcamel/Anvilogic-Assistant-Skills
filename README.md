@@ -23,13 +23,16 @@ repo only reference operations that exist in that registry.
 
 ## Wave roadmap
 
+The full project plan and per-wave runbooks live in the CLI repo:
+[docs/project-plan.md](https://github.com/grandcamel/anvilogic-as/blob/main/docs/project-plan.md).
+
 | Wave | Scope | Status |
 |:----:|-------|--------|
 | 1 | Public-source API surface capture (`api-surface/` registry) | Done 2026-07-06 |
-| 2 | Plugin scaffold - structure, router-hub stub, setup command (this repo) | In progress |
-| 3 | Gated capture - live/authenticated endpoint verification | Planned |
-| 4 | Domain skill coverage - detections, scenarios, eoi, hunting, alerts, feeds, forge, blueprints, metrics | Planned |
-| 5 | First release - tagged versions, brew tap, marketplace listing | Planned |
+| 2 | Plugin scaffold - structure, router-hub stub, setup command (this repo) | Done 2026-07-06 |
+| 3 | Gated capture - live/authenticated endpoint verification | In progress |
+| 4 | Domain skill coverage - detections, scenarios, eoi, hunting, alerts, feeds, forge, blueprints, metrics | Planned ([runbook](https://github.com/grandcamel/anvilogic-as/blob/main/docs/wave4-coverage-runbook.md)) |
+| 5 | First release - tagged versions, brew tap, marketplace listing | Planned ([runbook](https://github.com/grandcamel/anvilogic-as/blob/main/docs/wave5-release-runbook.md)) |
 
 > **Current limitation:** endpoint paths are not yet captured, so the plugin
 > supports **mock mode and registry exploration only**
