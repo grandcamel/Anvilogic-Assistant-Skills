@@ -1,0 +1,23 @@
+# Permissive markdownlint config - style consistency without noise.
+default: true
+
+# Line length: docs contain long tables and command examples.
+MD013: false
+
+# Allow inline HTML (callouts, badges).
+MD033: false
+
+# First line need not be a top-level heading (frontmatter files).
+MD041: false
+
+# Allow duplicate headings across sections.
+MD024: false
+
+# Allow bare URLs in reference tables.
+MD034: false
+
+# Allow emphasis used as pseudo-headings in short stubs.
+MD036: false
+
+# Table pipe alignment style: doc tables mix aligned and compact columns.
+MD060: false

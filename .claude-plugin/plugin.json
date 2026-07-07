@@ -1,0 +1,19 @@
+{
+  "name": "anvilogic-assistant-skills",
+  "version": "0.1.0",
+  "description": "Anvilogic SOC detection-engineering automation for Claude Code via the anvilogic-as CLI - registry-driven, with an API-surface registry covering detections, scenarios, EOI, hunting, alerts, feeds, forge, blueprints, and metrics (domain skills arrive in Wave 4)",
+  "author": {
+    "name": "grandcamel"
+  },
+  "repository": "https://github.com/grandcamel/Anvilogic-Assistant-Skills",
+  "license": "MIT",
+  "keywords": [
+    "anvilogic",
+    "soc",
+    "detection-engineering",
+    "security",
+    "detections",
+    "threat-hunting",
+    "automation"
+  ]
+}

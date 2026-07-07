@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON manifests with jq
+        run: |
+          jq empty .claude-plugin/plugin.json
+          jq empty .claude-plugin/marketplace.json
+          jq empty release-please-config.json
+          jq empty .release-please-manifest.json
+          # Required fields
+          jq -e '.name == "anvilogic-assistant-skills" and .version and .description' .claude-plugin/plugin.json
+          jq -e '.plugins | length == 1 and .[0].source == "./"' .claude-plugin/marketplace.json
+
+      - name: Check SKILL.md frontmatter has name + description
+        run: |
+          set -euo pipefail
+          for f in skills/*/SKILL.md; do
+            echo "Checking $f"
+            # Frontmatter must open on line 1 and close before EOF
+            head -1 "$f" | grep -qx -- '---'
+            fm=$(awk '/^---$/{n++; next} n==1{print}' "$f")
+            echo "$fm" | grep -qE '^name:' || { echo "::error file=$f::missing name in frontmatter"; exit 1; }
+            echo "$fm" | grep -qE '^description:' || { echo "::error file=$f::missing description in frontmatter"; exit 1; }
+          done
+
+      - name: Markdown lint
+        run: npx --yes markdownlint-cli2 "**/*.md" "!node_modules"
