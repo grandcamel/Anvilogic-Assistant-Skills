@@ -1,0 +1,25 @@
+# GitLab CI mirror of .github/workflows/ci.yml (used when hosted on GitLab;
+# inert on GitHub). Release automation is handled separately — see the CLI
+# repo's docs/migration-gitlab-runbook.md.
+validate:
+  image: node:20
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq jq >/dev/null
+  script:
+    - jq empty .claude-plugin/plugin.json
+    - jq empty .claude-plugin/marketplace.json
+    - jq -e '.name == "anvilogic-assistant-skills" and .version and .description' .claude-plugin/plugin.json
+    - jq -e '.plugins | length == 1 and .[0].source == "./"' .claude-plugin/marketplace.json
+    - |
+      set -euo pipefail
+      for f in skills/*/SKILL.md; do
+        echo "Checking $f"
+        head -1 "$f" | grep -qx -- '---'
+        fm=$(awk '/^---$/{n++; next} n==1{print}' "$f")
+        echo "$fm" | grep -qE '^name:' || { echo "missing name in $f"; exit 1; }
+        echo "$fm" | grep -qE '^description:' || { echo "missing description in $f"; exit 1; }
+      done
+    - npx --yes markdownlint-cli2 "**/*.md" "!node_modules"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
